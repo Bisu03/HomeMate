@@ -1,8 +1,8 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
-import NextAuthSessionProvider from "./provider";
 import { Toaster } from "@/components/ui/sonner";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Outfit({ subsets: ["latin"] });
 
@@ -13,16 +13,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <NextAuthSessionProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+
           <div className=" mx-6 md:mx-16">
             <Header />
             <Toaster />
             {children}
           </div>
-        </NextAuthSessionProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

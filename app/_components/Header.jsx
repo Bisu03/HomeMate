@@ -1,6 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import React, { useEffect } from 'react'
 import {
@@ -15,11 +15,11 @@ import Link from 'next/link'
 
 function Header() {
 
-  const { data } = useSession();
+  // const { data } = useSession();
 
-  useEffect(() => {
-    console.log(data);
-  }, [data])
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data])
 
   return (
     <div className='p-5 shadow-sm flex  justify-between
@@ -30,7 +30,7 @@ function Header() {
         <div className='md:flex items-center
             gap-6 hidden
             '>
-          
+
           <Link href={'/'} className='hover:scale-105 hover:text-primary mr-8
                 cursor-pointer'>Home</Link>
           <Link href={'/search/Panting'} className='hover:scale-105 hover:text-primary mr-8
@@ -38,16 +38,10 @@ function Header() {
         </div>
       </div>
       <div>
-     
-        {data?.user ?
+        <SignedIn>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Image src={data?.user?.image}
-                alt='user'
-                width={40}
-                height={40}
-                className='rounded-full'
-              />
+              <UserButton afterSignOutUrl='/' showName />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -55,18 +49,22 @@ function Header() {
               <DropdownMenuItem>
                 <Link href={'/mybooking'}>My Booking</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
+              {/* <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem> */}
 
             </DropdownMenuContent>
           </DropdownMenu>
 
-          :
+        </SignedIn>
 
-          <Button onClick={() => signIn('descope')}>Login / Sign Up</Button>
+        <SignedOut>
+          <Button asChild >
+            <Link href="/sign-in">Login/Sign Up</Link>
+          </Button>
+        </SignedOut>
 
-        }
+
       </div>
-    </div>
+    </div >
   )
 }
 
