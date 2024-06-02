@@ -17,13 +17,19 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import moment from 'moment';
 
+import { useUser } from "@clerk/nextjs";
+
 function BookingSection({children,business}) {
+
+    const { user } = useUser();
+
+    console.log(user?.primaryEmailAddress.emailAddress);
 
     const [date,setDate]=useState(new Date());
     const [timeSlot,setTimeSlot]=useState([]);
     const [selectedTime,setSelectedTime]=useState();
     const [bookedSlot,setBookedSlot]=useState([]);
-    const {data}=useSession();
+    // const {data}=useSession();
     useEffect(()=>{
         getTime();
        
@@ -68,7 +74,7 @@ function BookingSection({children,business}) {
 
       const saveBooking=()=>{
             GlobalApi.createNewBooking(business.id,
-                moment(date).format('DD-MMM-yyyy'),selectedTime,data.user.email,data.user.name)
+                moment(date).format('DD-MMM-yyyy'),selectedTime,user?.primaryEmailAddress?.emailAddress,user?.username)
                 .then(resp=>{
                     console.log(resp);
                     if(resp)

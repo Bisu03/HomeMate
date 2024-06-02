@@ -5,32 +5,28 @@ import BookingHistoryList from './_component/BookingHistoryList'
 import GlobalApi from '@/app/_services/GlobalApi'
 import { useSession } from 'next-auth/react'
 import moment from 'moment'
+import { useUser } from '@clerk/nextjs'
 
 function MyBooking() {
 
-    const { data } = useSession();
+    const { user } = useUser();
+
+
     const [bookingHistory, setBookingHistory] = useState([]);
     useEffect(() => {
-        data && GetUserBookingHistory();
-    }, [data])
+        user && GetUserBookingHistory();
+    }, [user])
 
     /**
      * Used to Get User Booking History
      */
     const GetUserBookingHistory = () => {
-        GlobalApi.GetUserBookingHistory(data.user.email).then(resp => {
+        GlobalApi.GetUserBookingHistory(user?.primaryEmailAddress?.emailAddress).then(resp => {
             // console.log(resp);
             setBookingHistory(resp.bookings);
         })
     }
-    const filterData = (type) => {
-        const result = bookingHistory.filter(item =>
-            type == 'booked' ?
-                new Date(item.date) >= new Date()
-                : new Date(item.date) <= new Date());
-        return result;
-    }
-    console.log(bookingHistory);
+
 
     return (
         <div className='my-10 mx-5 md:mx-36'>
@@ -43,14 +39,15 @@ function MyBooking() {
                 <TabsContent value="booked">
                     <BookingHistoryList
                         bookingHistory={bookingHistory}
-                        type='booked'
+                        type='Booked'
                     />
                 </TabsContent>
                 <TabsContent value="completed">
                     <BookingHistoryList
                         bookingHistory={bookingHistory}
-                        type='completed' />
+                        type='Completed' />
                 </TabsContent>
+            
             </Tabs>
 
         </div>

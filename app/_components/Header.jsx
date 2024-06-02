@@ -13,7 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from 'next/link'
 
-function Header() {
+async  function Header() {
+
+
 
   // const { data } = useSession();
 
@@ -35,6 +37,8 @@ function Header() {
                 cursor-pointer'>Home</Link>
           <Link href={'/search/Panting'} className='hover:scale-105 hover:text-primary mr-8
                 cursor-pointer'>Search</Link>
+          <Link href={'/mybooking'} className='hover:scale-105 hover:text-primary mr-8
+                cursor-pointer'>Bookings</Link>
         </div>
       </div>
       <div>
