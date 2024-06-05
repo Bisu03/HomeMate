@@ -6,16 +6,16 @@ import React from 'react'
 function BusinessList({businessList,title}) {
 
   return (
-    <div className='mt-5'>
+    <div className='mt-5 '>
         <h2 className='font-bold text-[22px]'>{title}</h2>
-        <div className='grid grid-cols-2 md:grid-cols-3
-        lg:grid-cols-4 gap-6 mt-5 '>
+        <div className='grid grid-cols-1 md:grid-cols-3
+        lg:grid-cols-4 gap-6 mt-5 w-full '>
             {businessList.length>0?businessList.map((business,index)=>(
                 <Link href={'/details/'+business.id}
                 key={index} className='shadow-md 
                 rounded-lg hover:shadow-lg cursor-pointer
                  hover:shadow-primary
-                 hover:scale-105 transition-all ease-in-out'>
+                 hover:scale-105 transition-all ease-in-out w-full'>
                     <Image src={business?.images[0].url}
                     alt={business.name}
                     width={500}

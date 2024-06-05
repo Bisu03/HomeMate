@@ -5,7 +5,7 @@ function layout({ children }) {
   return (
     <div>
       <div className='grid grid-cols-1 md:grid-cols-4 mt-8'>
-        <div className='hidden md:block'>
+        <div className=' '>
 
           {/* Side Category Nav bar  */}
           <CategorySideBar />
